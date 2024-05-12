@@ -94,11 +94,11 @@ class GroupchatManage(Gtk.Box):
         text = buffer_.get_text(buffer_.get_start_iter(),
                                 buffer_.get_end_iter(),
                                 False)
-
-        assert self._contact.subject is not None
-
-        self._ui.subject_change_button.set_sensitive(
-            text != self._contact.subject.text)
+        if not self._contact.subject:
+            self._ui.subject_change_button.set_sensitive(True)
+        else:
+            self._ui.subject_change_button.set_sensitive(
+                text != self._contact.subject.text)
 
     def _on_subject_change_clicked(self, _button: Gtk.Button) -> None:
         buffer_ = self._ui.subject_textview.get_buffer()

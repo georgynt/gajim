@@ -628,6 +628,11 @@ class MUC(BaseModule):
                         self._log.info('Server modified nickname to: %s',
                                        properties.muc_nickname)
 
+                    # Fix if room has no subject
+                    self._room_join_complete(muc_data)
+                    room.notify('room-joined')
+                    # ====
+
                 elif muc_data.state == MUCJoinedState.CREATING:
                     if properties.is_new_room:
                         self.configure_room(room_jid)

@@ -158,7 +158,8 @@ class Client(Observable, ClientModules):
         self._client.set_username(self._user)
         self._client.set_resource(get_resource(self._account))
         self._client.set_http_session(create_http_session())
-        self._client.set_supported_fallback_ns([Namespace.REPLY])
+        if hasattr(self._client,'set_supported_fallback_ns'):
+            self._client.set_supported_fallback_ns([Namespace.REPLY])
 
         self._client.subscribe('resume-failed', self._on_resume_failed)
         self._client.subscribe('resume-successful', self._on_resume_successful)

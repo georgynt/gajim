@@ -170,8 +170,14 @@ class Message(BaseModule):
         occupant = self._get_occupant_info(
             remote_jid, direction, timestamp, properties)
 
-        assert properties.bodies is not None
-        message_text = properties.bodies.get(None)
+        if hasattr(properties, 'bodies'):
+            assert properties.bodies is not None
+            message_text = properties.bodies.get(None)
+        elif hasattr(properties, 'body'):
+            #assert properties.body is not None
+            message_text = properties.body
+        else:
+            message_text = ""
         oob_data = parse_oob(properties)
 
         encryption_data = None
